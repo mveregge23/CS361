@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VirtualGarden.Models;
+using VirtualGarden.ViewModels;
 
 namespace VirtualGarden.Controllers
 {
     public class HomeController : Controller
     {
+        
+        private readonly ApplicationDbContext _context;
+        
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        
         public ActionResult Index()
         {
-            return View();
-        }
+            var locations = _context.Locations.ToList();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            var viewModel = new GardenFormViewModel
+            {
+                Locations = locations
+            };
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View("Index", viewModel);
         }
     }
 }

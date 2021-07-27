@@ -55,6 +55,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -127,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GardensController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -135,12 +137,30 @@
     <Compile Include="Migrations\202107242027116_CreateInitialModel.designer.cs">
       <DependentUpon>202107242027116_CreateInitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107271428566_GardenModelChanges.cs" />
+    <Compile Include="Migrations\202107271428566_GardenModelChanges.designer.cs">
+      <DependentUpon>202107271428566_GardenModelChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107271501199_AddLocations.cs" />
+    <Compile Include="Migrations\202107271501199_AddLocations.designer.cs">
+      <DependentUpon>202107271501199_AddLocations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107271536032_LocationModelUpdates.cs" />
+    <Compile Include="Migrations\202107271536032_LocationModelUpdates.designer.cs">
+      <DependentUpon>202107271536032_LocationModelUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107271627454_RelationshipUpdates.cs" />
+    <Compile Include="Migrations\202107271627454_RelationshipUpdates.designer.cs">
+      <DependentUpon>202107271627454_RelationshipUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Garden.cs" />
     <Compile Include="Models\Plant.cs" />
     <Compile Include="Models\Planter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\GardenFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -175,12 +195,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Gardens\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -198,6 +217,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202107242027116_CreateInitialModel.resx">
       <DependentUpon>202107242027116_CreateInitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107271428566_GardenModelChanges.resx">
+      <DependentUpon>202107271428566_GardenModelChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107271501199_AddLocations.resx">
+      <DependentUpon>202107271501199_AddLocations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107271536032_LocationModelUpdates.resx">
+      <DependentUpon>202107271536032_LocationModelUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107271627454_RelationshipUpdates.resx">
+      <DependentUpon>202107271627454_RelationshipUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
