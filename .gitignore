@@ -1,1 +1,4 @@
-/VirtualGarden/.vs
+/VirtualGarden/.vs/*
+/VirtualGarden/packages/*
+/VirtualGarden/VirtualGarden/obj/*
+/VirtualGarden/VirtualGarden/bin/*
