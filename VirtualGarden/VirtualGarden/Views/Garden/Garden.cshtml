@@ -1,11 +1,29 @@
-﻿@model VirtualGarden.ViewModels.GardenViewModel 
+﻿@model VirtualGarden.ViewModels.GardenViewModel
 @{
     ViewBag.Title = "Garden";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<div class="modal fade" id="planterModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal-label">Planter Menu</h4>
+            </div>
+            <div class="modal-body">
+                Plant Status
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+
 <h2>@Model.Name</h2>
 <h4>@Model.Location</h4>
+
 
 <table>
     @{
@@ -15,11 +33,11 @@
                 <td>
                     @if (Model.Planters[i].Plant != null)
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
                     }
                     else
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
                     }
                 </td>
             }
@@ -30,11 +48,11 @@
                 <td>
                     @if (Model.Planters[i].Plant != null)
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
                     }
                     else
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
                     }
                 </td>
             }
@@ -45,11 +63,11 @@
                 <td>
                     @if (Model.Planters[i].Plant != null)
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
                     }
                     else
                     {
-                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
                     }
                 </td>
             }
@@ -57,29 +75,15 @@
     }
 </table>
 
-<div class="modal fade" id="planterModal" role="menu"></div>
-
-
 <script type="text/javascript">
 
     $(document).ready(function () {
         $(".planter").click(function () {
             var url = "../../api/Planter/" + this.getAttribute("id");
 
-        $.get(url, function (data) {
-                var buttons = data.Plant ? '<button class="btn btn-primary">Add Plant</button>' : '<button class="btn btn-danger">Remove</button><button class="btn btn-success">Water</button>'
-                var html = '<div class="modal-dialog"> \
-                <div class="modal-content"> \
-                    <div class="modal-header"> \
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-                        <h4 class="modal-title" id="myModal-label">Planter Menu</h4> \
-                    </div> \
-                    <div class="modal-body"> \
-                    Plant Status \
-                    </div> \
-                    <div class="modal-footer">' + buttons + '</div></div></div></div>'
-            $("#planterModal").html(html);
-            $("#planterModal").show();
+            $.get(url, function (data) {
+                var buttons = data['Plant'] === null ? '<button class="btn btn-primary">Add Plant</button>' : '<button class="btn btn-danger">Remove</button><button class="btn btn-success">Water</button>'
+                $(".modal-footer").html(buttons);
             });
         });
     });
