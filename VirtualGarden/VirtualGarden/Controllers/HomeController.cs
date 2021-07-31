@@ -22,9 +22,12 @@ namespace VirtualGarden.Controllers
         {
             var locations = _context.Locations.ToList();
 
-            var viewModel = new GardenFormViewModel
+            var viewModel = new HomePageViewModel
             {
-                Locations = locations
+                GardenFormViewModel = new GardenFormViewModel {
+                    Locations = locations
+                }
+                
             };
 
             return View("Index", viewModel);

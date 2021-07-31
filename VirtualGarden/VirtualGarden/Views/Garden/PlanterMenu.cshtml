@@ -1,0 +1,28 @@
+﻿@model VirtualGarden.ViewModels.PlanterViewModel
+
+
+<div class="container">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal-label">Planter Menu</h4>
+               
+            </div>
+            <div class="modal-body">
+                Plant Status
+            </div>
+            <div class="modal-footer">
+                @if (Model.Plant == null)
+                {
+                    <button class="btn btn-primary">Add Plant</button>
+                }
+                else
+                {
+                    <button class="btn btn-danger">Remove</button>
+                    <button class="btn btn-success">Water</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

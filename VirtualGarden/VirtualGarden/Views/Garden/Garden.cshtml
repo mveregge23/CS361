@@ -1,0 +1,87 @@
+﻿@model VirtualGarden.ViewModels.GardenViewModel 
+@{
+    ViewBag.Title = "Garden";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+<h4>@Model.Location</h4>
+
+<table>
+    @{
+        <tr>
+            @for (var i = 0; i < 3; ++i)
+            {
+                <td>
+                    @if (Model.Planters[i].Plant != null)
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                    }
+                    else
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                    }
+                </td>
+            }
+        </tr>
+        <tr>
+            @for (var i = 3; i < 6; ++i)
+            {
+                <td>
+                    @if (Model.Planters[i].Plant != null)
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                    }
+                    else
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                    }
+                </td>
+            }
+        </tr>
+        <tr>
+            @for (var i = 6; i < 9; ++i)
+            {
+                <td>
+                    @if (Model.Planters[i].Plant != null)
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">Model.Planters[i].Plant.PlantType.Name</span>
+                    }
+                    else
+                    {
+                        <span class="planter" id="@Model.Planters[i].PlanterId">X</span>
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<div class="modal fade" id="planterModal" role="menu"></div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".planter").click(function () {
+            var url = "../../api/Planter/" + this.getAttribute("id");
+
+        $.get(url, function (data) {
+                var buttons = data.Plant ? '<button class="btn btn-primary">Add Plant</button>' : '<button class="btn btn-danger">Remove</button><button class="btn btn-success">Water</button>'
+                var html = '<div class="modal-dialog"> \
+                <div class="modal-content"> \
+                    <div class="modal-header"> \
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                        <h4 class="modal-title" id="myModal-label">Planter Menu</h4> \
+                    </div> \
+                    <div class="modal-body"> \
+                    Plant Status \
+                    </div> \
+                    <div class="modal-footer">' + buttons + '</div></div></div></div>'
+            $("#planterModal").html(html);
+            $("#planterModal").show();
+            });
+        });
+    });
+
+</script>
