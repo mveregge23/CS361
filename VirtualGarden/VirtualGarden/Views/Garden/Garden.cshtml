@@ -127,23 +127,75 @@
                     addPlantForm.id = "addPlantForm"
                     addPlantForm.append(formGroup1)
                     addPlantForm.append(formGroup2)
-                    addPlantForm.append(addPlantButton)
 
                     $(".modal-body").html(addPlantForm)
+                    $(".modal-footer").html(addPlantButton);
 
-                    $("#addPlantForm").submit(function (e) {
-                        e.preventDefault();
+                    $("#submitAddPlantForm").on("click", function () {
                         var jqxhr = $.post('../../api/plant', $('#addPlantForm').serialize())
                             .done(function (resp) {
                                 $("#planterModal").modal('toggle');
-                                $("#"+resp.planterId).html(resp.plantTypeName)
+                                $("#" + resp.planterId).html(resp.plantTypeName)
                             })
                             .fail(function () {
                                 $('.modal-footer').html("Error posting the update.");
                             });
+                    })
+
+                    $("#addPlantForm").submit(function (e) {
+                        e.preventDefault();
                     });
+
                 }
-                var buttons = data['Plant'] === null ? '<button class="btn btn-primary">Add Plant</button>' : '<button class="btn btn-danger">Remove</button><button class="btn btn-success">Water</button>'
+
+                else {
+
+                    let header = document.createElement("h4")
+                    header.innerHTML = data.plantTypeName
+
+                    let waterLevel = document.createElement("p");
+                    waterLevel.className = "text-left"
+                    waterLevel.id = "waterLevel"
+                    waterLevel.innerHTML = "Water Level: " + data.plantWaterLevel + "%";
+
+                    let sunLevel = document.createElement("p");
+                    sunLevel.className = "text-left"
+                    sunLevel.id = "sun-level"
+                    sunLevel.innerHTML = "Sun Level: " + data.plantSunLevel + "%";
+
+                    let plantStatus = document.createElement("div")
+                    plantStatus.className = "border border-secondary rounded"
+
+                    plantStatus.append(header);
+                    plantStatus.append(waterLevel);
+                    plantStatus.append(sunLevel);
+
+                    var buttons = '<button id="removePlant" plant-id='+data.plantId+' class="btn btn-danger">Remove</button><button id="waterPlant" plant-id='+data.plantId+' class="btn btn-success">Water</button>'
+
+                    $(".modal-body").html(plantStatus);
+                    $(".modal-footer").html(buttons);
+
+                    $("#waterPlant").on("click", function () {
+                        $.ajax({
+                            url: "../../api/Plant/" + this.getAttribute("plant-id"),
+                            type: "PUT",
+                            success: function () { $("#waterLevel").html("Water Level: 100%") },
+                            error: function (resp) { alert(resp.body) }
+                        })
+                    })
+
+                    $("#removePlant").on("click", function () {
+                        let id = $(this).attr('plant-id')
+                        $.ajax({
+                            url: "../../api/Plant/" + id,
+                            type: "DELETE",
+                            success: function (result) { console.log(result); $("#" + result).html("X");  $("#planterModal").modal("toggle");  },
+                            error: function (result) { alert(result + "does not exist!") }
+                        })
+                    })
+
+                }
+                
             });
         });
 

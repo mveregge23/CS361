@@ -42,6 +42,9 @@ namespace VirtualGarden.Controllers.api
                 PlantTypeId = planter.Plant == null ? 0 : planter.Plant.PlantTypeId,
                 PlantTypeName = planter.Plant == null ? null : planter.Plant.PlantType.Name,
                 PlantTypes = plantTypeViewModels,
+                PlantSunLevel = planter.Plant == null ? 0 : planter.Plant.Sun,
+                PlantWaterLevel = planter.Plant == null ? 0 : planter.Plant.Water,
+                PlantId = planter.Plant == null ? 0 : planter.Plant.Id
             };
 
             return viewModel;

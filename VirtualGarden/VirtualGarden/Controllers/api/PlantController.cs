@@ -74,5 +74,96 @@ namespace VirtualGarden.Controllers.api
 
             return newViewModel;
         }
+
+        [HttpPut]
+        public IHttpActionResult Water(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest("Must provide a plant Id");
+            }
+
+            Plant plant;
+
+            try
+            {
+                plant = _context.Plants.Single(p => p.Id == id);
+            }
+            catch
+            {
+                return BadRequest("Plant not found");
+            }
+
+            plant.Water = plant.Water >= 100 ? plant.Water : 100;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
+                        Debug.Write(string.Format("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage));
+                    }
+                }
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Remove(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest("Must provide a plant Id");
+            }
+
+            Plant plant;
+
+            try
+            {
+                plant = _context.Plants.Single(p => p.Id == id);
+            }
+            catch
+            {
+                return BadRequest("Plant not found");
+            }
+
+            int planterId = plant.Planter.Id;
+            _context.Plants.Remove(plant);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
+                        Debug.Write(string.Format("Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage));
+                    }
+                }
+            }
+
+            return Ok(planterId);
+        }
     }
 }
