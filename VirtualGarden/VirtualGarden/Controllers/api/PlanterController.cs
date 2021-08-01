@@ -24,11 +24,24 @@ namespace VirtualGarden.Controllers.api
         {
 
             Planter planter = _context.Planters.Single(p => p.Id == id);
+            List<PlantType> plantTypes = _context.PlantTypes.ToList();
+            List<PlantTypeViewModel> plantTypeViewModels = new List<PlantTypeViewModel>();
+
+            foreach (PlantType plantType in plantTypes)
+            {
+                plantTypeViewModels.Add( new PlantTypeViewModel
+                {
+                    PlantTypeId = plantType.Id,
+                    PlantTypeName = plantType.Name
+                });
+            }
 
             PlanterViewModel viewModel = new PlanterViewModel
             {
                 PlanterId = planter.Id,
-                Plant = planter.Plant
+                PlantTypeId = planter.Plant == null ? 0 : planter.Plant.PlantTypeId,
+                PlantTypeName = planter.Plant == null ? null : planter.Plant.PlantType.Name,
+                PlantTypes = plantTypeViewModels,
             };
 
             return viewModel;

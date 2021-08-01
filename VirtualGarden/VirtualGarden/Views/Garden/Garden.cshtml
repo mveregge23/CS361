@@ -31,9 +31,9 @@
             @for (var i = 0; i < 3; ++i)
             {
                 <td>
-                    @if (Model.Planters[i].Plant != null)
+                    @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
@@ -46,9 +46,9 @@
             @for (var i = 3; i < 6; ++i)
             {
                 <td>
-                    @if (Model.Planters[i].Plant != null)
+                    @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
@@ -61,9 +61,9 @@
             @for (var i = 6; i < 9; ++i)
             {
                 <td>
-                    @if (Model.Planters[i].Plant != null)
+                    @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">Model.Planters[i].Plant.PlantType.Name</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
@@ -82,10 +82,72 @@
             var url = "../../api/Planter/" + this.getAttribute("id");
 
             $.get(url, function (data) {
+                if (data["plantTypeId"] === 0) {
+                    let plantTypeDropDown = document.createElement("select");
+                    data["plantTypes"].forEach(function (plantType) {
+                        const opt = new Option(plantType.plantTypeName, plantType.plantTypeId);
+                        plantTypeDropDown.add(opt)
+                    });
+                    plantTypeDropDown.className = "form-control";
+                    plantTypeDropDown.setAttribute("data-val", "true");
+                    plantTypeDropDown.setAttribute("data-val-required", "The Plant Type field is required.");
+                    plantTypeDropDown.id = "plantTypeId";
+                    plantTypeDropDown.name = "plantTypeId";
+
+                    let plantTypeLabel = document.createElement("label");
+                    plantTypeLabel.setAttribute("for", "plantTypeId")
+                    plantTypeLabel.innerHTML = "Plant Type";
+
+                    let formGroup1 = document.createElement("div")
+                    formGroup1.className = "form-group";
+                    formGroup1.append(plantTypeLabel);
+                    formGroup1.append(plantTypeDropDown);
+
+
+                    let planterId = document.createElement("input");
+                    planterId.type = "text";
+                    planterId.value = data["planterId"]
+                    planterId.hidden = "true";
+                    planterId.name = "planterId";
+                    planterId.id = "planterId"
+
+                    let formGroup2 = document.createElement("div")
+                    formGroup2.className = "form-group";
+                    formGroup2.append(planterId);
+
+                    let addPlantButton = document.createElement("button")
+                    addPlantButton.className = "btn btn-primary"
+                    addPlantButton.id = "submitAddPlantForm"
+                    addPlantButton.type = "submit"
+                    addPlantButton.innerHTML = "Add Plant"
+
+                    let addPlantForm = document.createElement("form");
+                    addPlantForm.action = "../../api/Plant"
+                    addPlantForm.method = "post"
+                    addPlantForm.id = "addPlantForm"
+                    addPlantForm.append(formGroup1)
+                    addPlantForm.append(formGroup2)
+                    addPlantForm.append(addPlantButton)
+
+                    $(".modal-body").html(addPlantForm)
+
+                    $("#addPlantForm").submit(function (e) {
+                        e.preventDefault();
+                        var jqxhr = $.post('../../api/plant', $('#addPlantForm').serialize())
+                            .done(function (resp) {
+                                $("#planterModal").modal('toggle');
+                                $("#"+resp.planterId).html(resp.plantTypeName)
+                            })
+                            .fail(function () {
+                                $('.modal-footer').html("Error posting the update.");
+                            });
+                    });
+                }
                 var buttons = data['Plant'] === null ? '<button class="btn btn-primary">Add Plant</button>' : '<button class="btn btn-danger">Remove</button><button class="btn btn-success">Water</button>'
-                $(".modal-footer").html(buttons);
             });
         });
+
+
     });
 
 </script>

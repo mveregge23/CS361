@@ -138,39 +138,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\api\PlantController.cs" />
     <Compile Include="Controllers\api\PlanterController.cs" />
     <Compile Include="Controllers\GardenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107242027116_CreateInitialModel.cs" />
-    <Compile Include="Migrations\202107242027116_CreateInitialModel.designer.cs">
-      <DependentUpon>202107242027116_CreateInitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\202107312142526_RecreateModel.cs" />
+    <Compile Include="Migrations\202107312142526_RecreateModel.designer.cs">
+      <DependentUpon>202107312142526_RecreateModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107271428566_GardenModelChanges.cs" />
-    <Compile Include="Migrations\202107271428566_GardenModelChanges.designer.cs">
-      <DependentUpon>202107271428566_GardenModelChanges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107271501199_AddLocations.cs" />
-    <Compile Include="Migrations\202107271501199_AddLocations.designer.cs">
-      <DependentUpon>202107271501199_AddLocations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107271536032_LocationModelUpdates.cs" />
-    <Compile Include="Migrations\202107271536032_LocationModelUpdates.designer.cs">
-      <DependentUpon>202107271536032_LocationModelUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107271627454_RelationshipUpdates.cs" />
-    <Compile Include="Migrations\202107271627454_RelationshipUpdates.designer.cs">
-      <DependentUpon>202107271627454_RelationshipUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107272013362_AddingFKsToModels.cs" />
-    <Compile Include="Migrations\202107272013362_AddingFKsToModels.designer.cs">
-      <DependentUpon>202107272013362_AddingFKsToModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107301613475_AddPlantTypeEntity.cs" />
-    <Compile Include="Migrations\202107301613475_AddPlantTypeEntity.designer.cs">
-      <DependentUpon>202107301613475_AddPlantTypeEntity.cs</DependentUpon>
+    <Compile Include="Migrations\202107312157164_RemovingNavigationProperties.cs" />
+    <Compile Include="Migrations\202107312157164_RemovingNavigationProperties.designer.cs">
+      <DependentUpon>202107312157164_RemovingNavigationProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -184,6 +165,7 @@
     <Compile Include="ViewModels\GardenFormViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\PlanterViewModel.cs" />
+    <Compile Include="ViewModels\PlantTypeViewModel.cs" />
     <Compile Include="ViewModels\VisitGardenViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,26 +223,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107242027116_CreateInitialModel.resx">
-      <DependentUpon>202107242027116_CreateInitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107312142526_RecreateModel.resx">
+      <DependentUpon>202107312142526_RecreateModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107271428566_GardenModelChanges.resx">
-      <DependentUpon>202107271428566_GardenModelChanges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107271501199_AddLocations.resx">
-      <DependentUpon>202107271501199_AddLocations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107271536032_LocationModelUpdates.resx">
-      <DependentUpon>202107271536032_LocationModelUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107271627454_RelationshipUpdates.resx">
-      <DependentUpon>202107271627454_RelationshipUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107272013362_AddingFKsToModels.resx">
-      <DependentUpon>202107272013362_AddingFKsToModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107301613475_AddPlantTypeEntity.resx">
-      <DependentUpon>202107301613475_AddPlantTypeEntity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107312157164_RemovingNavigationProperties.resx">
+      <DependentUpon>202107312157164_RemovingNavigationProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

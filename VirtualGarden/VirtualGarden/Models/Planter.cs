@@ -10,12 +10,9 @@ namespace VirtualGarden.Models
     {
         public int Id { get; set; }
 
-        
-        public Garden Garden { get; set; }
-
         [Required]
         public int GardenId { get; set; }
 
-        public Plant Plant { get; set; }
+        public virtual Plant Plant { get; set; }
     }
 }

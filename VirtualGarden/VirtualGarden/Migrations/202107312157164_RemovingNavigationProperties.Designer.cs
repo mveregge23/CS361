@@ -7,13 +7,13 @@ namespace VirtualGarden.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddLocations : IMigrationMetadata
+    public sealed partial class RemovingNavigationProperties : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLocations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemovingNavigationProperties));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107271501199_AddLocations"; }
+            get { return "202107312157164_RemovingNavigationProperties"; }
         }
         
         string IMigrationMetadata.Source

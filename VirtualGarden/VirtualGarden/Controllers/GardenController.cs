@@ -43,7 +43,8 @@ namespace VirtualGarden.Controllers
                 planterViewModels.Add(new PlanterViewModel
                 {
                     PlanterId = planter.Id,
-                    Plant = planter.Plant
+                    PlantTypeId = planter.Plant == null ? 0 : planter.Plant.PlantTypeId,
+                    PlantTypeName = planter.Plant == null ? null : planter.Plant.PlantType.Name
                 });
             }
 
@@ -77,7 +78,7 @@ namespace VirtualGarden.Controllers
             {
                 garden = _context.Gardens.Single(g => g.Name == viewModel.VisitGardenViewModel.Name);
             }
-            catch (Exception ex)
+            catch
             {
                 Console.WriteLine("Garden does not exist.");
             }
@@ -119,7 +120,7 @@ namespace VirtualGarden.Controllers
             for (int i = 0; i < 9; ++i)
             {
                 
-                planters.Add(new Planter { Garden = garden } );
+                planters.Add(new Planter { GardenId = garden.Id } );
 
             }
 

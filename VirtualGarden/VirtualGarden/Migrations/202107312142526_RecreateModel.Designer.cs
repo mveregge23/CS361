@@ -7,13 +7,13 @@ namespace VirtualGarden.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class GardenModelChanges : IMigrationMetadata
+    public sealed partial class RecreateModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(GardenModelChanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RecreateModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107271428566_GardenModelChanges"; }
+            get { return "202107312142526_RecreateModel"; }
         }
         
         string IMigrationMetadata.Source

@@ -22,12 +22,9 @@ namespace VirtualGarden.Models
         [Required]
         public int GrowthProgress { get; set; }
 
-        public Planter Planter { get; set; }
+        public virtual Planter Planter { get; set; }
 
-        public int PlanterId { get; set; }
-
-        [Required]
-        public PlantType PlantType { get; set; }
+        public virtual PlantType PlantType { get; set; }
 
         [Required]
         public int PlantTypeId { get; set; }
