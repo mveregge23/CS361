@@ -5,3 +5,5 @@
 /WikiService/.vs/*
 /WikiService/venv/*
 /VirtualGarden/packages/*
+/VirtualGarden/VirtualGarden/bin/*
+/VirtualGarden/VirtualGarden/obj/*
