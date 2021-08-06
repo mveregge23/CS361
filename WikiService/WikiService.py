@@ -4,6 +4,7 @@ import wikipedia
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
 
 app = Flask(__name__)
 
@@ -58,3 +59,10 @@ def getWikiData():
         }
 
     return data
+
+
+if __name__ == "__main__":
+
+    port = int(os.environ.get('port', 8394))
+
+    app.run(port=port)

@@ -2,10 +2,6 @@
 /VirtualGarden/packages/*
 /VirtualGarden/VirtualGarden/obj/*
 /VirtualGarden/VirtualGarden/bin/*
-.vs
-/WikiService/venv/Include/*
-/WikiService/venv/Lib/*
-/WikiService/venv/Scripts/*
-pip-selfcheck.json
-pyvenv.cfg
-/WikiService/venv/__pycache__/*
+/WikiService/.vs/*
+/WikiService/venv/*
+/VirtualGarden/packages/*
