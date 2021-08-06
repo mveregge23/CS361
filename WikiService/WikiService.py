@@ -49,13 +49,21 @@ def getWikiData():
     lat = coordinateString.split(' ')[0]
     lon = coordinateString.split(' ')[1]
 
+    titleArray = name.split("_")
+    title = ' '.join(titleArray)
+
     data = {
         "history": history,
         "summary": summary,
         "location": {
             "lat": lat,
             "lon": lon
-            }
+            },
+        "title": title
         }
 
     return data
+
+if __name__=="__main__":
+
+    app.run()
