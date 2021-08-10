@@ -49,22 +49,62 @@ namespace VirtualGarden.Jobs
 
         public void GrowPlant(Plant plant, WeatherModel tw)
         {
-            int sun = CalculateSun(tw);
-            int water = CalculateWater(tw);
-            
-            plant.Sun = plant.Sun - 5 + sun;
-            plant.Water = plant.Water - 5 + water;
+            int currentDaySun = CalculateSun(tw);
+            int currentDayWater = CalculateWater(tw);
+
+
+
+            if (plant.Sun - 5 + currentDaySun > 100)
+            {
+                plant.Sun = 100;
+            }
+            else if (plant.Sun - 5 + currentDaySun < 0)
+            {
+                plant.Sun = 0;
+            }
+            else
+            {
+                plant.Sun = plant.Sun - 5 + currentDaySun;
+            }
+
+            if (plant.Water - 5 + currentDayWater > 100)
+            {
+                plant.Water = 100;
+            }
+            else if (plant.Water - 5 + currentDayWater < 0)
+            {
+                plant.Water = 0;
+            }
+            else
+            {
+                plant.Water = plant.Water - 5 + currentDayWater;
+            }
 
             if (plant.Sun > plant.PlantType.SunRequirement && plant.Water > plant.PlantType.WaterRequirement)
             {
-                System.Diagnostics.Debug.WriteLine("Updating plant growth from ", plant.Growth.ToString());
-                plant.Growth = (plant.Growth + 10) >= 100 ? 100 : (plant.Growth + 10);
-                System.Diagnostics.Debug.WriteLine(" to ", plant.Growth.ToString());
+                
+                if (plant.Growth + 10 >= 100)
+                {
+                    plant.Growth = 100;
+                }
+                else
+                {
+                    plant.Growth = plant.Growth + 10;
+                }
             }
 
             else
             {
-                plant.Growth = (plant.Growth - 10) <= 0 ? 0 : (plant.Growth - 10);
+
+                if (plant.Growth - 10 < 0)
+                {
+                    plant.Growth = 0;
+                }
+                else
+                {
+                    plant.Growth = plant.Growth - 10;
+                }
+
             }
 
             _context.SaveChanges();

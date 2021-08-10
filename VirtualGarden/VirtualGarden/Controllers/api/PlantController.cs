@@ -36,7 +36,6 @@ namespace VirtualGarden.Controllers.api
                 Growth = 1,
                 Water = 50,
                 Sun = 50,
-                GrowthProgress = 10,
                 Planter = planter,
                 PlantTypeId = viewModel.PlantTypeId
             };

@@ -158,9 +158,9 @@
     <Compile Include="Migrations\202107312142526_RecreateModel.designer.cs">
       <DependentUpon>202107312142526_RecreateModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202107312157164_RemovingNavigationProperties.cs" />
-    <Compile Include="Migrations\202107312157164_RemovingNavigationProperties.designer.cs">
-      <DependentUpon>202107312157164_RemovingNavigationProperties.cs</DependentUpon>
+    <Compile Include="Migrations\202108102135280_ImplementDataAnnotations.cs" />
+    <Compile Include="Migrations\202108102135280_ImplementDataAnnotations.designer.cs">
+      <DependentUpon>202108102135280_ImplementDataAnnotations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -235,8 +235,8 @@
     <EmbeddedResource Include="Migrations\202107312142526_RecreateModel.resx">
       <DependentUpon>202107312142526_RecreateModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107312157164_RemovingNavigationProperties.resx">
-      <DependentUpon>202107312157164_RemovingNavigationProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202108102135280_ImplementDataAnnotations.resx">
+      <DependentUpon>202108102135280_ImplementDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
