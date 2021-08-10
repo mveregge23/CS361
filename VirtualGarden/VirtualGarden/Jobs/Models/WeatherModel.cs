@@ -24,7 +24,6 @@ namespace VirtualGarden.Jobs
             public string main { get; set; }
         }
 
-        public int LocationId { get; set; }
         public CurrentDayData current { get; set; }
         public List<HourlyWeather> hourly { get; set; }
     }

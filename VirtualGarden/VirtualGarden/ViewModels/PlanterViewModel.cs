@@ -14,6 +14,7 @@ namespace VirtualGarden.ViewModels
         public int PlanterId { get; set; }
         public int PlantWaterLevel { get; set; }
         public int PlantSunLevel { get; set; }
+        public int PlantGrowth { get; set; }
         public int PlantId { get; set; }
     };
 }

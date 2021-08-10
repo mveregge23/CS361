@@ -160,8 +160,13 @@
 
                     let sunLevel = document.createElement("p");
                     sunLevel.className = "text-left"
-                    sunLevel.id = "sun-level"
+                    sunLevel.id = "sunLevel"
                     sunLevel.innerHTML = "Sun Level: " + data.plantSunLevel + "%";
+
+                    let plantGrowth = document.createElement("p");
+                    plantGrowth.className = "text-left"
+                    plantGrowth.id = "plantGrowth"
+                    plantGrowth.innerHTML = "Plant Growth: " + data.plantGrowth + "%";
 
                     let plantStatus = document.createElement("div")
                     plantStatus.className = "border border-secondary rounded"
@@ -169,6 +174,7 @@
                     plantStatus.append(header);
                     plantStatus.append(waterLevel);
                     plantStatus.append(sunLevel);
+                    plantStatus.append(plantGrowth)
 
                     var buttons = '<button id="removePlant" plant-id='+data.plantId+' class="btn btn-danger">Remove</button><button id="waterPlant" plant-id='+data.plantId+' class="btn btn-success">Water</button>'
 

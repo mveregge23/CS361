@@ -16,7 +16,6 @@ namespace VirtualGarden
     public class MvcApplication : System.Web.HttpApplication
     {
         private static Timer timer;
-
         
 
         protected void Application_Start()
@@ -35,7 +34,7 @@ namespace VirtualGarden
                 callback: new TimerCallback(plg.UpdatePlantGrowth),
                 state: timerState,
                 dueTime: 0,
-                period: 10000);
+                period: 60000);
 
         }
     }

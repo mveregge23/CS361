@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net.Http;
 using VirtualGarden.Models;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Data.Entity.Spatial;
 using VirtualGarden.WeatherData;
+using Newtonsoft.Json;
 
 namespace VirtualGarden.Jobs
 {
@@ -19,10 +21,12 @@ namespace VirtualGarden.Jobs
         }
 
         private readonly ApplicationDbContext _context;
+        private readonly HttpClient client;
         
         public PlantGrowthJob()
         {
             _context = new ApplicationDbContext();
+            client = new HttpClient();
         }
 
 
@@ -34,17 +38,55 @@ namespace VirtualGarden.Jobs
             GrowPlants();
         }
 
-        public void GrowPlants()
+        public async void GrowPlants()
         {
             TestWeatherData twd = new TestWeatherData();
             WeatherModel testWeather = twd.GetTestWeatherData();
 
+            List<Location> locations = _context.Locations.ToList();
+            Dictionary<int, WeatherModel> weathers = new Dictionary<int, WeatherModel>();
+            string uri = "https://cs361-weather-service.herokuapp.com/history?";
+
+            foreach (Location loc in locations)
+            {
+
+                string fullUri = uri + "latitude=" + loc.LatLon.Latitude + "&longitude=" + loc.LatLon.Longitude + "&time=" + (DateTimeOffset.Now.ToUnixTimeSeconds() - 86400);
+
+                HttpResponseMessage response = await client.GetAsync(fullUri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = response.Content;
+                    string jsonContent = content.ReadAsStringAsync().Result;
+                    
+                    try
+                    {
+                        WeatherModel weather = JsonConvert.DeserializeObject<WeatherModel>(jsonContent);
+                        weathers.Add(loc.Id, weather);
+                    }
+                    catch (JsonSerializationException ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(string.Format("Problem deserializing json to weather model: {0}", ex.ToString()));
+                    }
+                }
+
+            }
+
             List<Plant> plants = _context.Plants.ToList();
 
-            foreach(Plant plant in plants)
+            foreach (Plant plant in plants)
             {
-                GrowPlant(plant, testWeather);
+                int locationId = plant.Planter.Garden.LocationId;
+                if (weathers.ContainsKey(locationId)) { 
+                    System.Diagnostics.Debug.WriteLine(string.Format("Growing plant using live weather data"));
+                    GrowPlant(plant, weathers[locationId]); 
+                }
+                else { 
+                    System.Diagnostics.Debug.WriteLine(string.Format("Growing plant using test weather data"));
+                    GrowPlant(plant, testWeather); 
+                }
             }
+
         }
 
         public void GrowPlant(Plant plant, WeatherModel tw)
@@ -79,6 +121,8 @@ namespace VirtualGarden.Jobs
             {
                 plant.Water = plant.Water - 5 + currentDayWater;
             }
+
+            _context.SaveChanges();
 
             if (plant.Sun > plant.PlantType.SunRequirement && plant.Water > plant.PlantType.WaterRequirement)
             {
@@ -133,14 +177,11 @@ namespace VirtualGarden.Jobs
         public int CalculateWater(WeatherModel weather)
         {
 
-            int sunrise = weather.current.sunrise;
-            int sunset = weather.current.sunset;
-
             int water = 0;
 
             foreach (WeatherModel.HourlyWeather hw in weather.hourly)
             {
-                if (hw.weather.main == "Rain")
+                if (hw.weather.main == "Rain" || hw.weather.main == "Thunderstorm" || hw.weather.main == "Drizzle")
                 {
                     water = water + 1;
                 }
