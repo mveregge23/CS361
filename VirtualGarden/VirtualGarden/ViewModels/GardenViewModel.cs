@@ -10,6 +10,7 @@ namespace VirtualGarden.ViewModels
     {
         public string Name { get; set; }
         public string Location { get; set; }
+        public Boolean isNewGarden { get; set; }
         public List<PlanterViewModel> Planters { get; set; }
     }
 }

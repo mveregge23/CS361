@@ -96,30 +96,30 @@ namespace VirtualGarden.Jobs
 
 
 
-            if (plant.Sun - 5 + currentDaySun > 100)
+            if (plant.Sun - (plant.PlantType.SunRequirement / 10) + currentDaySun > 100)
             {
                 plant.Sun = 100;
             }
-            else if (plant.Sun - 5 + currentDaySun < 0)
+            else if (plant.Sun - (plant.PlantType.SunRequirement / 10) + currentDaySun < 0)
             {
                 plant.Sun = 0;
             }
             else
             {
-                plant.Sun = plant.Sun - 5 + currentDaySun;
+                plant.Sun = plant.Sun - (int)(plant.PlantType.SunRequirement / 10) + currentDaySun;
             }
 
-            if (plant.Water - 5 + currentDayWater > 100)
+            if (plant.Water - (plant.PlantType.WaterRequirement / 10) + currentDayWater > 100)
             {
                 plant.Water = 100;
             }
-            else if (plant.Water - 5 + currentDayWater < 0)
+            else if (plant.Water - (plant.PlantType.WaterRequirement / 10) + currentDayWater < 0)
             {
                 plant.Water = 0;
             }
             else
             {
-                plant.Water = plant.Water - 5 + currentDayWater;
+                plant.Water = plant.Water - (int)(plant.PlantType.WaterRequirement / 10) + currentDayWater;
             }
 
             _context.SaveChanges();
@@ -140,13 +140,13 @@ namespace VirtualGarden.Jobs
             else
             {
 
-                if (plant.Growth - 10 < 0)
+                if (plant.Growth - 5 < 0)
                 {
                     plant.Growth = 0;
                 }
                 else
                 {
-                    plant.Growth = plant.Growth - 10;
+                    plant.Growth = plant.Growth - 5;
                 }
 
             }

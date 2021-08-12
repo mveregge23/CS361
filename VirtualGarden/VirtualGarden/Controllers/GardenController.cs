@@ -22,7 +22,7 @@ namespace VirtualGarden.Controllers
         }
 
         
-        public ActionResult Visit(string id)
+        public ActionResult Visit(string id, Boolean isNewGarden = false)
         {
             
             int gardenId = int.Parse(id);
@@ -53,6 +53,7 @@ namespace VirtualGarden.Controllers
                 Name = gardenName,
                 Location = locationName,
                 Planters = planterViewModels,
+                isNewGarden = isNewGarden
             };
 
 
@@ -149,7 +150,7 @@ namespace VirtualGarden.Controllers
             }
 
 
-            return RedirectToAction("Visit", new { id = garden.Id } );
+            return RedirectToAction("Visit", new { id = garden.Id, isNewGarden = true } );
         }
 
     }

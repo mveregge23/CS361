@@ -20,64 +20,107 @@
     </div>
 </div>
 
+@if (Model.isNewGarden) {
+
+<div class="modal fade" id="newGardenModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal-label">Welcome to @Model.Name!</h4>
+            </div>
+            <div class="modal-body">
+                Click on an empty space to plant something! Trees require a lot of sun and a little water,
+                flowers require equal amounts of water and sun, and vegetables require a lot of water and
+                a little sun.
+                <br/><br />
+                After you plant something, click on it to check its status! Every day the sun and water
+                levels for your plants will be updated based on the sun and water they receive in the 
+                location you selected for your garden. If it was a sunny day yesterday, your plant's sun
+                level will go up. If it was a rainy day, your plant's water level will go up. Make sure your
+                plants have the sun and water they need to grow, and their growth will increase!
+                <br/><br />
+                Is your plant running low on water? Open the Plant Status menu by clicking on the plant, then 
+                click Water to water your plant. If your plant is running low on sun, well, there's nothing you
+                can do about that, is there? If your plant isn't getting enough sun to grow, you may need to
+                pick another plant that has a lower sun requirement, like flowers or vegetables. Open the Plant
+                     <S></S>tatus menu by clicking on the plant, then click Remove to remove the plant and plant something
+                else!
+                <br/><br />
+                Remember your garden's name, and enter it from the Home page to visit your garden whenever
+                you want. Happy gardening!
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
 
 <h2>@Model.Name</h2>
 <h4>@Model.Location</h4>
 
 
-<table>
+<div class="container-fluid">
     @{
-        <tr>
+        <div class="row" style="margin-bottom: 20px;">
             @for (var i = 0; i < 3; ++i)
             {
-                <td>
+                <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
-                </td>
+                </div>
             }
-        </tr>
-        <tr>
+        </div>
+        <div class="row" style="margin-bottom: 20px;">
             @for (var i = 3; i < 6; ++i)
             {
-                <td>
+                <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
-                </td>
+                </div>
             }
-        </tr>
-        <tr>
+        </div>
+        <div class="row" style="margin-bottom: 20px;">
             @for (var i = 6; i < 9; ++i)
             {
-                <td>
+                <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
-                </td>
+                </div>
             }
-        </tr>
+        </div>
     }
-</table>
+</div>
 
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        if (Boolean("@Model.isNewGarden")) {
+            $("#newGardenModal").modal("toggle");
+        }
+
         $(".planter").click(function () {
             var url = "../../api/Planter/" + this.getAttribute("id");
 
@@ -174,7 +217,7 @@
                     plantStatus.append(header);
                     plantStatus.append(waterLevel);
                     plantStatus.append(sunLevel);
-                    plantStatus.append(plantGrowth)
+                    plantStatus.append(plantGrowth);
 
                     var buttons = '<button id="removePlant" plant-id='+data.plantId+' class="btn btn-danger">Remove</button><button id="waterPlant" plant-id='+data.plantId+' class="btn btn-success">Water</button>'
 
