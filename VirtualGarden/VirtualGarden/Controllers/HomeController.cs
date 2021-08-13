@@ -18,6 +18,7 @@ namespace VirtualGarden.Controllers
             _context = new ApplicationDbContext();
         }
         
+        // Home page
         public ActionResult Index()
         {
             var locations = _context.Locations.ToList();

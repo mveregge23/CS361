@@ -34,7 +34,7 @@ namespace VirtualGarden
                 callback: new TimerCallback(plg.UpdatePlantGrowth),
                 state: timerState,
                 dueTime: 0,
-                period: 86400000);
+                period: 60000);
 
         }
     }

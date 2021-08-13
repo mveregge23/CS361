@@ -71,11 +71,13 @@
                 <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter"
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" 
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
                 </div>
             }
@@ -86,11 +88,13 @@
                 <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" 
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" 
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
                 </div>
             }
@@ -101,11 +105,13 @@
                 <div class="col-md-4 panel panel-default" style="display:flex; justify-content:center">
                     @if (Model.Planters[i].PlantTypeId > 0)
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" 
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">@Model.Planters[i].PlantTypeName</a>
                     }
                     else
                     {
-                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
+                        <a href="#" id="@Model.Planters[i].PlanterId" class="btn btn-primary planter" 
+                           data-toggle="modal" data-target="#planterModal" style="margin: 20px 0px;">X</a>
                     }
                 </div>
             }
@@ -117,14 +123,19 @@
 
     $(document).ready(function () {
 
+        // If this is a new garden, show the modal walkthrough
         if (Boolean("@Model.isNewGarden")) {
             $("#newGardenModal").modal("toggle");
         }
 
+        // Add click listener to each planter
         $(".planter").click(function () {
             var url = "../../api/Planter/" + this.getAttribute("id");
 
+            // Get planter data for each planter
             $.get(url, function (data) {
+
+                // When there is no plant, construct and display the add plant menu
                 if (data["plantTypeId"] === 0) {
                     let plantTypeDropDown = document.createElement("select");
                     data["plantTypes"].forEach(function (plantType) {
@@ -191,6 +202,7 @@
 
                 }
 
+                // When there is a plant, display the plant status menu
                 else {
 
                     let header = document.createElement("h4")
@@ -199,12 +211,12 @@
                     let waterLevel = document.createElement("p");
                     waterLevel.className = "text-left"
                     waterLevel.id = "waterLevel"
-                    waterLevel.innerHTML = "Water Level: " + data.plantWaterLevel + "%";
+                    waterLevel.innerHTML = "Water Level: " + data.plantWaterLevel + " / " + data.plantTypeWaterRequirement + "%";
 
                     let sunLevel = document.createElement("p");
                     sunLevel.className = "text-left"
                     sunLevel.id = "sunLevel"
-                    sunLevel.innerHTML = "Sun Level: " + data.plantSunLevel + "%";
+                    sunLevel.innerHTML = "Sun Level: " + data.plantSunLevel + " / " + data.plantTypeSunRequirement + "%";
 
                     let plantGrowth = document.createElement("p");
                     plantGrowth.className = "text-left"
@@ -219,7 +231,8 @@
                     plantStatus.append(sunLevel);
                     plantStatus.append(plantGrowth);
 
-                    var buttons = '<button id="removePlant" plant-id='+data.plantId+' class="btn btn-danger">Remove</button><button id="waterPlant" plant-id='+data.plantId+' class="btn btn-success">Water</button>'
+                    var buttons = '<button id="removePlant" plant-id=' + data.plantId + ' class="btn btn-danger">\
+                    Remove</button><button id="waterPlant" plant-id='+ data.plantId + ' class="btn btn-success">Water</button>'
 
                     $(".modal-body").html(plantStatus);
                     $(".modal-footer").html(buttons);
@@ -228,7 +241,7 @@
                         $.ajax({
                             url: "../../api/Plant/" + this.getAttribute("plant-id"),
                             type: "PUT",
-                            success: function () { $("#waterLevel").html("Water Level: 100%") },
+                            success: function () { $("#waterLevel").html("Water Level: 100 / " + data.plantTypeWaterRequirement + "%") },
                             error: function (resp) { alert(resp.body) }
                         })
                     })

@@ -19,6 +19,7 @@ namespace VirtualGarden.Controllers.api
             _context = new ApplicationDbContext();
         }
 
+        // Get a planter
         [HttpGet]
         public PlanterViewModel Planter(int id)
         {
@@ -27,6 +28,7 @@ namespace VirtualGarden.Controllers.api
             List<PlantType> plantTypes = _context.PlantTypes.ToList();
             List<PlantTypeViewModel> plantTypeViewModels = new List<PlantTypeViewModel>();
 
+            // Construct plant types for add plant menu
             foreach (PlantType plantType in plantTypes)
             {
                 plantTypeViewModels.Add( new PlantTypeViewModel
@@ -41,6 +43,8 @@ namespace VirtualGarden.Controllers.api
                 PlanterId = planter.Id,
                 PlantTypeId = planter.Plant == null ? 0 : planter.Plant.PlantTypeId,
                 PlantTypeName = planter.Plant == null ? null : planter.Plant.PlantType.Name,
+                PlantTypeSunRequirement = planter.Plant == null ? 0 : (int)planter.Plant.PlantType.SunRequirement,
+                PlantTypeWaterRequirement = planter.Plant == null ? 0 : (int)planter.Plant.PlantType.WaterRequirement,
                 PlantTypes = plantTypeViewModels,
                 PlantSunLevel = planter.Plant == null ? 0 : planter.Plant.Sun,
                 PlantWaterLevel = planter.Plant == null ? 0 : planter.Plant.Water,

@@ -20,22 +20,26 @@ namespace VirtualGarden.Controllers.api
             _context = new ApplicationDbContext();
         }
 
+        // Create a new plant
         [HttpPost]
         public PlanterViewModel CreatePlant(PlanterViewModel viewModel)
         {
+
+            // Ensure a plant type is selected
             if (viewModel.PlantTypeId == 0)
             {
                 return viewModel;
             }
 
+            // Add plant to database
             Planter planter = _context.Planters.Single(p => p.Id == viewModel.PlanterId);
             PlantType plantType = _context.PlantTypes.Single(p => p.Id == viewModel.PlantTypeId);
             
             Plant plant = new Plant
             {
-                Growth = 1,
-                Water = 50,
-                Sun = 50,
+                Growth = 0,
+                Water = 100,
+                Sun = 100,
                 Planter = planter,
                 PlantTypeId = viewModel.PlantTypeId
             };
@@ -64,6 +68,8 @@ namespace VirtualGarden.Controllers.api
                 }
             }
             
+
+            // Create new view model with new plant
             PlanterViewModel newViewModel = new PlanterViewModel
             {
                 PlanterId = planter.Id,
@@ -74,9 +80,13 @@ namespace VirtualGarden.Controllers.api
             return newViewModel;
         }
 
+
+        // Water a plant
         [HttpPut]
         public IHttpActionResult Water(int id)
         {
+            
+            // Ensure there is a plant to be watered
             if (id == 0)
             {
                 return BadRequest("Must provide a plant Id");
@@ -84,6 +94,7 @@ namespace VirtualGarden.Controllers.api
 
             Plant plant;
 
+            // Try to water the plant
             try
             {
                 plant = _context.Plants.Single(p => p.Id == id);
@@ -95,6 +106,7 @@ namespace VirtualGarden.Controllers.api
 
             plant.Water = plant.Water >= 100 ? plant.Water : 100;
 
+            // Update the database
             try
             {
                 _context.SaveChanges();
@@ -119,9 +131,13 @@ namespace VirtualGarden.Controllers.api
             return Ok();
         }
 
+
+        // Remove a plant
         [HttpDelete]
         public IHttpActionResult Remove(int id)
         {
+
+            // Ensure there is a plant to remove
             if (id == 0)
             {
                 return BadRequest("Must provide a plant Id");
@@ -129,6 +145,7 @@ namespace VirtualGarden.Controllers.api
 
             Plant plant;
 
+            // Try to remove the plant
             try
             {
                 plant = _context.Plants.Single(p => p.Id == id);
@@ -141,6 +158,7 @@ namespace VirtualGarden.Controllers.api
             int planterId = plant.Planter.Id;
             _context.Plants.Remove(plant);
 
+            // Update the database
             try
             {
                 _context.SaveChanges();

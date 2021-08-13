@@ -11,6 +11,8 @@ namespace VirtualGarden.ViewModels
         public IEnumerable<PlantTypeViewModel> PlantTypes { get; set; }
         public int PlantTypeId { get; set; }
         public string PlantTypeName { get; set; }
+        public int PlantTypeWaterRequirement { get; set; }
+        public int PlantTypeSunRequirement { get; set; }
         public int PlanterId { get; set; }
         public int PlantWaterLevel { get; set; }
         public int PlantSunLevel { get; set; }

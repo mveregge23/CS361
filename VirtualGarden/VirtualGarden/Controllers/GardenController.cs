@@ -21,10 +21,11 @@ namespace VirtualGarden.Controllers
             _context = new ApplicationDbContext();
         }
 
-        
+        // Visit existing garden redirect
         public ActionResult Visit(string id, Boolean isNewGarden = false)
         {
             
+            // Get the garden
             int gardenId = int.Parse(id);
             Garden garden = _context.Gardens.Find(gardenId);
             Location location = _context.Locations.Find(garden.LocationId);
@@ -32,7 +33,7 @@ namespace VirtualGarden.Controllers
             string gardenName = garden.Name;
             string locationName = location.Name;
 
-
+            // Get the planters in the garden
             var planters = _context.Planters.Where(p => p.GardenId == gardenId).ToList().OrderBy(p => p.Id);
 
             var planterViewModels = new List<PlanterViewModel>();
@@ -60,6 +61,7 @@ namespace VirtualGarden.Controllers
             return View("Garden", viewModel);
         }
 
+        // Visit an existing garden from home page
         [HttpPost]
         public ActionResult Visit(HomePageViewModel viewModel)
         {
@@ -73,6 +75,7 @@ namespace VirtualGarden.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            // Try to get the garden
             Garden garden = null;
 
             try
@@ -95,10 +98,11 @@ namespace VirtualGarden.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
+            // Redirect to visit garden
             return RedirectToAction("Visit", new { id = garden.Id } );
         }
 
+        // Create a garden
         [HttpPost]
         public ActionResult Create(HomePageViewModel viewModel)
         {
@@ -110,12 +114,14 @@ namespace VirtualGarden.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            // Build the garden
             var garden = new Garden
             {
                 Name = viewModel.GardenFormViewModel.Name,
                 LocationId = viewModel.GardenFormViewModel.Location
             };
 
+            // Build the planters
             List<Planter> planters = new List<Planter>();
 
             for (int i = 0; i < 9; ++i)
@@ -125,6 +131,7 @@ namespace VirtualGarden.Controllers
 
             }
 
+            // Add the garden and planters to the database
             _context.Gardens.Add(garden);
             _context.Planters.AddRange(planters);
 
@@ -149,7 +156,7 @@ namespace VirtualGarden.Controllers
                 }
             }
 
-
+            // Redirect to visit the new garden
             return RedirectToAction("Visit", new { id = garden.Id, isNewGarden = true } );
         }
 
